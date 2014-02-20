@@ -133,6 +133,7 @@ function userInput() {
 
   showResults();
   window.location.hash = encodeURIComponent(text);
+  ga('send', 'pageview', window.location.hash);
 
   // Show the unit to the user
   if(input_unit != input_unit_object.name.toLowerCase()) {
@@ -244,6 +245,7 @@ function checkIfInputRecognised() {
   if(!resultsShown && inputForm.node().value.trim() != "") {
     d3.select('#examples').attr('style','display: none');
     d3.select('#apology').attr('style','display: block');
+    ga('send', 'pageview', 'missing'+window.location.hash);
     resultsShown = true;
   }
 }
