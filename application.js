@@ -86,7 +86,7 @@ function fundamental_unit_comparison(a,b) {
   } else {
     return b.fundamental_quantity - a.fundamental_quantity;
   }
-}(
+}
 
 // To create a fundamental unit, we recursively loop through the equivalent units
 // until we can't any more. For example, say we define:
@@ -154,14 +154,17 @@ function userInput() {
   window.location.hash = encodeURIComponent(text);
   ga('send', 'pageview', "found/"+window.location.hash.slice(1));
 
-  // Show the unit to the user
+  // Show the unit to the user in various titles
   if(input_unit != input_unit_object.name.toLowerCase()) {
-    interpretation_text = input_unit_original_case+" is interpreted as "+input_unit_object.name+". " ;
+    interpretation_text = input_unit_original_case+" is probably "+input_unit_object.name;
   } else {
-    interpretation_text = "";
+    interpretation_text = input_unit_object.name;
   }
-  d3.select('#input_description .name').html(interpretation_text);
+  d3.select('#input_description .name').text(interpretation_text);
   d3.select('#input_description .description').html(input_unit_object.description);
+
+  d3.select('#comparisons .title').text(input_quantity+" "+input_unit_object.name+" is");
+  d3.select('#output .title').text(input_quantity+" "+input_unit_object.name+" is equivalent to");
   
   // If it is, then convert the user input into the fundamental unit
   input_fundamental_quantity = input_quantity * input_unit_object.fundamental_quantity;
@@ -252,7 +255,7 @@ function drawComparisons(data) {
     .html(function(d) { return d.description; });
 
 
-  blocks.select('h2').html(function(d) { return d.output_fraction_string+" "+d.name;});
+  blocks.select('h2').html(function(d) { return d.output_fraction_string+" of "+d.name;});
   blocks.select('div.innerbar').attr('style', function(d) { return 'width:'+Math.round(d.output_fraction*100,1)+"%"; });
 
   blocks.exit().remove();
