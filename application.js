@@ -64,10 +64,29 @@ tsv_loaded_count = 0;
 function tsvHasLoaded() {
   tsv_loaded_count++;
   if(tsv_loaded_count == 2) {
+
+    // Can only change conversions into fundamental unit when units
+    // have been loaded
     comparisons.forEach(convertToFunamentalUnit);
+
+    // For ease of display, put the largest comparisons and units at the top
+    comparisons.sort(fundamental_unit_comparison);
+    unit_list.sort(fundamental_unit_comparison);
+    
+    // Call this once, in case the inputs were set from the hash before
+    // all the data was loaded 
     userInput();
   }
 }
+
+function fundamental_unit_comparison(a,b) {
+  // If they are different units, leave them alone
+  if(a.fundamental_unit != b.fundamental_unit) {
+    return 0;
+  } else {
+    return b.fundamental_quantity - a.fundamental_quantity;
+  }
+}(
 
 // To create a fundamental unit, we recursively loop through the equivalent units
 // until we can't any more. For example, say we define:
