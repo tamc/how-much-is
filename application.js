@@ -3,7 +3,8 @@ unit_list = undefined;
 unit_regular_expression = /\s*(\d+(\.\d+)?([eE]-?\d+)?)\s*(\S*)/;
 alias_split_regular_expression = /\s*,\s*/;
 output_number_format = d3.format(".3r");
-comparison_number_format = d3.format(".0%");
+small_comparison_number_format = d3.format(".0%");
+large_comparison_number_format = d3.format(".1f");
 comparisons = undefined;
 
 d3.tsv("units.tsv", function(data) {
@@ -211,11 +212,13 @@ function userInput() {
     // Check the comparison has the same fundamental unit
     if(input_fundamental_unit == c.fundamental_unit) {
       c.output_fraction = input_fundamental_quantity / c.fundamental_quantity;
-      c.output_fraction_string = comparison_number_format(c.output_fraction);
+      if(c.output_fraction < 2) {
+        c.output_fraction_string = small_comparison_number_format(c.output_fraction)+" of "+c.name;
+      } else {
+        c.output_fraction_string = large_comparison_number_format(c.output_fraction)+" &times; "+c.name;
+      }
 
-      //if(c.output_fraction <= 1) {
-        comparisons_to_display.push(c);
-      //}
+      comparisons_to_display.push(c);
     } else {
       c.output_fraction = undefined;
     }
@@ -255,26 +258,51 @@ function drawUnits(data) {
 }
 
 function drawComparisons(data) {
-  blocks = d3.select('#comparisons').selectAll('div.comparison').data(data, function(d) { return d.name; });
+  comparison_divs = d3.select('#comparisons').selectAll('div.comparison').data(data, function(d) { return d.name; });
 
-  new_blocks = blocks.enter().append('div')
+  // Add overall structure for new comparisons
+  new_divs = comparison_divs.enter().append('div')
     .attr('class', 'comparison')
 
-  new_blocks.append('h2');
+  new_divs.append('h2');
 
-  new_blocks.append('div').attr('class', 'outerbar').append('div').attr('class','innerbar')
+  new_divs.append('div').attr('class', 'barwrapper');
 
-  new_blocks.append('p')
+  new_divs.append('p')
     .attr('class','description')
     .html(function(d) { return d.description; });
 
+  // Remove obsolete comparisons
+  comparison_divs.exit().remove();
 
-  blocks.select('h2').html(function(d) { return d.output_fraction_string+" of "+d.name;});
-  blocks.select('div.innerbar').attr('style', function(d) { return 'width:'+Math.round(d.output_fraction*100,1)+"%"; });
+  // Update comparisons
+  comparison_divs.select('h2').html(function(d) { return d.output_fraction_string;});
 
+  blocks = comparison_divs.select('div.barwrapper').selectAll('div.outerbar')
+    .data(function(d) { return proportionToBlockWidths(d.output_fraction);});
+
+  blocks.enter().append('div').attr('class', 'outerbar').append('div').attr('class','innerbar');
   blocks.exit().remove();
 
+  blocks.attr('style', function(d) { return d.outer});
+  blocks.select('div.innerbar').attr('style', function(d) { return d.inner});
 
+}
+
+function proportionToBlockWidths(proportion) {
+  div = Math.floor(proportion);
+  remainder = proportion % 1;
+  number_of_blocks = Math.ceil(proportion);
+  outer_width = Math.round(100/number_of_blocks)-1;
+  outer_style = "width: "+outer_width+"%";
+  result = [];
+  for(i = 0; i < div; i++) {
+    result[i] = { outer: outer_style, inner: 'width: 100%'};
+  } 
+  if(remainder != 0) {
+    result.push({outer: outer_style, inner: "width: "+Math.round(remainder*100)+"%"});
+  }
+  return result;
 }
 
 function checkIfInputRecognised() {
@@ -285,7 +313,6 @@ function checkIfInputRecognised() {
     resultsShown = true;
   }
 }
-
 
 function showResults() {
   resultsShown = true;
