@@ -303,7 +303,6 @@ function clear() {
     d3.select('#input_description .name').html("");
     d3.select('#input_description .description').html("");
     d3.select('#examples').classed('closed', false);
-    d3.select('#apology').classed('closed', true);
     d3.select('#input_description').classed('closed', true);
     d3.select('#comparisons').classed('closed', true);
     d3.select('#output').classed('closed', true);
