@@ -163,7 +163,7 @@ function userInput() {
   d3.select('#input_description .name').text(interpretation_text);
   d3.select('#input_description .description').html(input_unit_object.description);
 
-  d3.select('#comparisons .title').text(input_quantity+" "+input_unit_object.name+" is");
+  d3.select('#comparisons .title').text(input_quantity+" "+input_unit_object.name+" is approximately");
   d3.select('#output .title').text(input_quantity+" "+input_unit_object.name+" is equivalent to");
   
   // If it is, then convert the user input into the fundamental unit
@@ -213,9 +213,9 @@ function userInput() {
       c.output_fraction = input_fundamental_quantity / c.fundamental_quantity;
       c.output_fraction_string = comparison_number_format(c.output_fraction);
 
-      if(c.output_fraction <= 1) {
+      //if(c.output_fraction <= 1) {
         comparisons_to_display.push(c);
-      }
+      //}
     } else {
       c.output_fraction = undefined;
     }
