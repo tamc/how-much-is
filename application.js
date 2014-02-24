@@ -141,11 +141,11 @@ function userInput() {
 
   input_unit_object = units.get(input_unit);
 
-  // This waits for 1 second in case the user is typing
-  // if, after 1 second, the unit isn't recognised, shows
+  // This waits for 5 seconds in case the user is typing
+  // if, after 5 seconds, the unit isn't recognised, shows
   // an apology to the user
   clearTimeout(input_timeout);
-  input_timeout = setTimeout(checkIfInputRecognised, 1000);
+  input_timeout = setTimeout(checkIfInputRecognised, 5*1000);
 
   // The unit may not be recognised
   if(input_unit_object == undefined) { return clear(); }
@@ -279,8 +279,8 @@ function drawComparisons(data) {
 
 function checkIfInputRecognised() {
   if(!resultsShown && inputForm.node().value.trim() != "") {
-    d3.select('#examples').attr('style','display: none');
-    d3.select('#apology').attr('style','display: block');
+    d3.select('#examples').classed('closed', false);
+    d3.select('#apology').classed('closed', false);
     ga('send', 'pageview', 'missing/'+window.location.hash.slice(1));
     resultsShown = true;
   }
@@ -289,9 +289,11 @@ function checkIfInputRecognised() {
 
 function showResults() {
   resultsShown = true;
-  d3.select('#examples').attr('style','display: none');
-  d3.select('#apology').attr('style','display: none');
-  d3.select('#results').attr('style','display: block');
+  d3.select('#examples').classed('closed', true);
+  d3.select('#apology').classed('closed', true);
+  d3.select('#input_description').classed('closed', false);
+  d3.select('#comparisons').classed('closed', false);
+  d3.select('#output').classed('closed', false);
 }
 
 function clear() {
@@ -300,9 +302,11 @@ function clear() {
     drawComparisons([]);
     d3.select('#input_description .name').html("");
     d3.select('#input_description .description').html("");
-    d3.select('#examples').attr('style','display: block');
-    d3.select('#results').attr('style','display: none');
-    d3.select('#apology').attr('style','display: none');
+    d3.select('#examples').classed('closed', false);
+    d3.select('#apology').classed('closed', true);
+    d3.select('#input_description').classed('closed', true);
+    d3.select('#comparisons').classed('closed', true);
+    d3.select('#output').classed('closed', true);
     window.location.hash = "";
     resultsShown = false;
   }
