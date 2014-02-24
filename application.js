@@ -2,7 +2,7 @@ units = d3.map();
 unit_list = undefined;
 unit_regular_expression = /\s*(\d+(\.\d+)?([eE]-?\d+)?)\s*(\S*)/;
 alias_split_regular_expression = /\s*,\s*/;
-output_number_format = d3.format(",.3r");
+output_number_format = d3.format(".3r");
 comparison_number_format = d3.format(".0%");
 comparisons = undefined;
 
@@ -240,9 +240,14 @@ function drawUnits(data) {
     .attr('class','description')
     .html(function(d) { return d.description; });
 
-
   blocks.select('h2').html(function(d) { return ""+d.output_quantity_string+"&thinsp;"+d.symbol+" &mdash; "+d.name;});
-  blocks.select('.preciseValue').html(function(d) { return ""+d.output_quantity+"&thinsp;"+d.symbol+" to be precise."; });
+  blocks.select('.preciseValue').html(function(d) { 
+    if((""+d.output_quantity) == d.output_quantity_string) {
+      return undefined;
+    } else {
+      return ""+d.output_quantity+"&thinsp;"+d.symbol+" to be precise."; 
+    }
+  });
 
   blocks.exit().remove();
 
