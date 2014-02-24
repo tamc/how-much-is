@@ -185,15 +185,24 @@ function userInput() {
     if(output_unit.fundamental_unit == input_fundamental_unit) { 
       output_unit.output_quantity = input_fundamental_quantity / output_unit.fundamental_quantity;
       output_unit.output_quantity_string = output_number_format(output_unit.output_quantity);
-
-      if(output_unit.output_quantity_string.length <= 4) {
-        units_to_display.push(output_unit);
-      }
+      // We might want to see this one
+      units_to_display.push(output_unit);
     } else {
       output_unit.output_quantity = undefined;
     }
   });
-  drawUnits(units_to_display);
+
+  // We don't want to overload the user, so select a subset of the possible
+  // units to display, prefering those with the shortest number (i.e., 10 beats 0.1 and 100)
+  units_to_display.sort(function(a,b) { 
+    return a.output_quantity_string.length - b.output_quantity_string.length;
+  });
+
+  // And slice it to show at most 5 results, and sort it small to large
+  units_to_display = units_to_display.slice(0,5);
+  units_to_display.sort(fundamental_unit_comparison); // Fundamental unit sort will be the same as quantitiy sort
+  
+  drawUnits(units_to_display.slice(0,5));
 
   // We also show a comparison to help the user understand whether it is big or small
   comparisons_to_display = [];
