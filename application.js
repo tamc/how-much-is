@@ -212,7 +212,7 @@ function userInput() {
     // Check the comparison has the same fundamental unit
     if(input_fundamental_unit == c.fundamental_unit) {
       c.output_fraction = input_fundamental_quantity / c.fundamental_quantity;
-      if(c.output_fraction < 2) {
+      if(c.output_fraction < 1.3) {
         c.output_fraction_string = small_comparison_number_format(c.output_fraction)+" of "+c.name;
       } else {
         c.output_fraction_string = large_comparison_number_format(c.output_fraction)+" &times; "+c.name;
