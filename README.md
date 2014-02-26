@@ -6,7 +6,7 @@ I wrote this tool to help me understand numbers in different units. The purpose 
 Adding or editing units
 =======================
 
-Edit [units.tsv][units.tsv] to add a new unit. It is easiest to edit this file in a spreadsheet program. Once edited, either email the new copy to me at tom@counsell.org or, if you know how, use github to [fork and pull][https://help.github.com/articles/using-pull-requests].
+Edit [units.tsv](units.tsv) to add a new unit. It is easiest to edit this file in a spreadsheet program. Once edited, either email the new copy to me at tom@counsell.org or, if you know how, use github to [fork and pull](https://help.github.com/articles/using-pull-requests).
 
 The file has one row per unit. By unit we mean suffix that might be added to a number. So kilograms and grams get separate rows.
 
@@ -17,7 +17,7 @@ Each row has:
 * aliases - other ways the unit is typtically referred to. Always included the singular form of the unit name (e.g., second) but potentially other, sometimes incorrect, ways of inputing it (e.g, sec for second). Separate alternatives with a comma (e.g., second, sec, secs). No need to worry about the various ways the name might be capitalised. 
 * equivalent_to - the unit in another unit (e.g., for a minute, we put 60s). A few more details on this are below.
 * description - start with the singular name in bold, then what it is, then who uses it and for what.
-* source - a reputable source for the conversion. The [NIST][http://physics.nist.gov/Pubs/SP811/appenB9.html] is a good source. Wikipedia less so.
+* source - a reputable source for the conversion. The [NIST](http://physics.nist.gov/Pubs/SP811/appenB9.html) is a good source. Wikipedia less so.
 
 The equivalent_to column can contain a number and unit written in any other unit. If that unit appears elsewhere in the table, then it is assumed tha a number in this unit can be converted into that other unit _and_ any unit that the other unit can be converted into. So, for example, if we have:
 
