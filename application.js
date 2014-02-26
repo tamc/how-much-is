@@ -217,8 +217,9 @@ function userInput() {
       } else {
         c.output_fraction_string = large_comparison_number_format(c.output_fraction)+" &times; "+c.name;
       }
-
-      comparisons_to_display.push(c);
+      if(c.output_fraction < 10) {
+        comparisons_to_display.push(c);
+      }
     } else {
       c.output_fraction = undefined;
     }
@@ -292,9 +293,11 @@ function drawComparisons(data) {
 function proportionToBlockWidths(proportion) {
   div = Math.floor(proportion);
   remainder = proportion % 1;
-  number_of_blocks = Math.ceil(proportion);
-  outer_width = Math.round(100/number_of_blocks)-1;
-  outer_style = "width: "+outer_width+"%";
+  // This alternative is to make blocks smaller so they fit in one line
+  //number_of_blocks = Math.ceil(proportion);
+  //outer_width = Math.round(100/number_of_blocks)-1;
+  //outer_style = "width: "+outer_width+"%";
+  outer_style = "width: 100%";
   result = [];
   for(i = 0; i < div; i++) {
     result[i] = { outer: outer_style, inner: 'width: 100%'};
