@@ -157,15 +157,15 @@ function userInput() {
 
   // Show the unit to the user in various titles
   if(input_unit != input_unit_object.name.toLowerCase()) {
-    interpretation_text = input_unit_original_case+" is probably "+input_unit_object.name;
+    interpretation_text = input_unit_original_case+" is probably "+input_unit_object.name+" ("+input_unit_object.symbol+")";
   } else {
     interpretation_text = input_unit_object.name;
   }
   d3.select('#input_description .name').text(interpretation_text);
   d3.select('#input_description .description').html(input_unit_object.description);
 
-  d3.select('#comparisons .title').text(input_quantity+" "+input_unit_object.name+" is approximately");
-  d3.select('#output .title').text(input_quantity+" "+input_unit_object.name+" is equivalent to");
+  d3.select('#comparisons .title').text(input_quantity+" "+input_unit_object.symbol+" is approximately");
+  d3.select('#output .title').text(input_quantity+" "+input_unit_object.symbol+" is equivalent to");
   
   // If it is, then convert the user input into the fundamental unit
   input_fundamental_quantity = input_quantity * input_unit_object.fundamental_quantity;
