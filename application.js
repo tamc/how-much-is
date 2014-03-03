@@ -188,7 +188,7 @@ function userInput() {
   d3.select('#input_description .description').html(input_unit_object.description);
 
   d3.select('#comparisons .title').html(format(input_quantity, input_unit_object.symbol, input_significant_figures)+" is approximately");
-  d3.select('#output .title').html(format(input_quantity, input_unit_object.symbol, input_significant_figures)+" is equivalent to");
+  d3.select('#output .title').html("To "+input_significant_figures+" significant figures, "+format(input_quantity, input_unit_object.symbol, input_significant_figures)+" is equivalent to");
   
   // Convert the user input into the fundamental unit
   input_fundamental_quantity = input_quantity * input_unit_object.fundamental_quantity;
