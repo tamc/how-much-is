@@ -6,6 +6,7 @@ output_number_format = d3.format(".3r");
 small_comparison_number_format = d3.format(".0%");
 large_comparison_number_format = d3.format(".1f");
 comparisons = undefined;
+user_input_text = undefined;
 
 d3.tsv("units.tsv", function(data) {
   unit_list = data;
@@ -126,6 +127,12 @@ input_timeout = undefined;
 function userInput() {
   // Get what the user wrote
   text = inputForm.node().value;
+
+  // Check if changed
+  if(text == user_input_text) {
+    return;
+  }
+  user_input_text = text;
 
   // Make it appear in the page title
   document.title = "How much is "+text+"?";
