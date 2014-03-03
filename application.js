@@ -116,10 +116,16 @@ function convertToFunamentalUnit(unit) {
   }
 }
 
+// We don't display numbers in any more significant figures than the input
 function significantFigures(number_as_string) {
   match = /\s*(0.0*)?(\d+(\.\d+)?)/.exec(number_as_string);
   significant_digits = match[2].replace('.','');
   return significant_digits.length
+}
+
+// We use a thin sapce to separate thousands and numbers from unit
+function format(number, unit, number_of_significant_figures) {
+  return d3.format(",."+number_of_significant_figures+"r")(number).replace(/,/gi,'&thinsp;')+"&thinsp;"+unit;
 }
 
 inputForm = d3.select('input#input');
@@ -177,11 +183,12 @@ function userInput() {
   } else {
     interpretation_text = input_unit_object.name;
   }
+
   d3.select('#input_description .name').text(interpretation_text);
   d3.select('#input_description .description').html(input_unit_object.description);
 
-  d3.select('#comparisons .title').text(input_quantity+" "+input_unit_object.symbol+" is approximately");
-  d3.select('#output .title').text(input_quantity+" "+input_unit_object.symbol+" is equivalent to");
+  d3.select('#comparisons .title').html(format(input_quantity, input_unit_object.symbol, input_significant_figures)+" is approximately");
+  d3.select('#output .title').html(format(input_quantity, input_unit_object.symbol, input_significant_figures)+" is equivalent to");
   
   // Convert the user input into the fundamental unit
   input_fundamental_quantity = input_quantity * input_unit_object.fundamental_quantity;
@@ -192,8 +199,6 @@ function userInput() {
 
   input_unit_object.output_quantity = input_quantity;
 
-  // We show the output to the right number of significant figures
-  output_number_format = d3.format("."+input_significant_figures+"r");
 
   unit_list.forEach(function(output_unit) {
     // Skip the input unit
@@ -204,7 +209,7 @@ function userInput() {
     // Check output unit has same fundamental unit
     if(output_unit.fundamental_unit == input_fundamental_unit) { 
       output_unit.output_quantity = input_fundamental_quantity / output_unit.fundamental_quantity;
-      output_unit.output_quantity_string = output_number_format(output_unit.output_quantity);
+      output_unit.output_quantity_string = format(output_unit.output_quantity, output_unit.symbol, input_significant_figures);
       // We might want to see this one
       units_to_display.push(output_unit);
     } else {
@@ -263,14 +268,7 @@ function drawUnits(data) {
     .attr('class','description')
     .html(function(d) { return d.description; });
 
-  blocks.select('h2').html(function(d) { return ""+d.output_quantity_string+"&thinsp;"+d.symbol+" &mdash; "+d.name;});
-  blocks.select('.preciseValue').html(function(d) { 
-    if((""+d.output_quantity) == d.output_quantity_string) {
-      return undefined;
-    } else {
-      return ""+d.output_quantity+"&thinsp;"+d.symbol+" to be precise."; 
-    }
-  });
+  blocks.select('h2').html(function(d) { return ""+d.output_quantity_string+" &mdash; "+d.name;});
 
   blocks.exit().remove();
 
