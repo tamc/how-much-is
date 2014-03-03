@@ -2,7 +2,6 @@ units = d3.map();
 unit_list = undefined;
 unit_regular_expression = /\s*(\d+(\.\d+)?([eE]-?\d+)?)\s*(\S*)/;
 alias_split_regular_expression = /\s*,\s*/;
-output_number_format = d3.format(".3r");
 small_comparison_number_format = d3.format(".0%");
 large_comparison_number_format = d3.format(".1f");
 comparisons = undefined;
@@ -117,6 +116,12 @@ function convertToFunamentalUnit(unit) {
   }
 }
 
+function significantFigures(number_as_string) {
+  match = /\s*(0.0*)?(\d+(\.\d+)?)/.exec(number_as_string);
+  significant_digits = match[2].replace('.','');
+  return significant_digits.length
+}
+
 inputForm = d3.select('input#input');
 inputForm.on('input', userInput);
 
@@ -140,9 +145,13 @@ function userInput() {
   // Split it into quantitiy and unit
   match = unit_regular_expression.exec(text);
   if(match == undefined) { return clear(); }
+  
   input_quantity = +match[1];
+
   input_unit_original_case = match[4].trim();
   input_unit = input_unit_original_case.toLowerCase().trim();
+
+  input_significant_figures = significantFigures(match[1]);
 
   // The user may not have entered a unit yet
   if(input_unit.length == 0) { return clear(); }
@@ -174,7 +183,7 @@ function userInput() {
   d3.select('#comparisons .title').text(input_quantity+" "+input_unit_object.symbol+" is approximately");
   d3.select('#output .title').text(input_quantity+" "+input_unit_object.symbol+" is equivalent to");
   
-  // If it is, then convert the user input into the fundamental unit
+  // Convert the user input into the fundamental unit
   input_fundamental_quantity = input_quantity * input_unit_object.fundamental_quantity;
   input_fundamental_unit = input_unit_object.fundamental_unit;
   
@@ -182,6 +191,9 @@ function userInput() {
   units_to_display = [];
 
   input_unit_object.output_quantity = input_quantity;
+
+  // We show the output to the right number of significant figures
+  output_number_format = d3.format("."+input_significant_figures+"r");
 
   unit_list.forEach(function(output_unit) {
     // Skip the input unit
