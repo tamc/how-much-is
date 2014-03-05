@@ -14,7 +14,7 @@ Each row has:
 
 * name - the conventional name of the unit, in plural form, capitalised correctly (e.g., seconds)
 * symbol - the conventional symbol for that unit, captialised correctly (e.g., s)
-* aliases - other ways the unit is typtically referred to. Always included the singular form of the unit name (e.g., second) but potentially other, sometimes incorrect, ways of inputing it (e.g, sec for second). Separate alternatives with a comma (e.g., second, sec, secs). No need to worry about the various ways the name might be capitalised. 
+* aliases - other, possibly incorrect, ways the unit is referred to (e.g, sec for second). Separate alternatives with a comma (e.g., second, sec, secs). No need to worry about the various ways the name might be capitalised, hyphenated or spaced. Do include plurals unless they are simply the addition of an s at the end of a word.
 * equivalent_to - the unit in another unit (e.g., for a minute, we put 60s). A few more details on this are below.
 * description - start with the singular name in bold, then what it is, then who uses it and for what.
 * source - a reputable source for the conversion. The [NIST](http://physics.nist.gov/Pubs/SP811/appenB9.html) is a good source. Wikipedia less so.

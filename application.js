@@ -1,6 +1,7 @@
-units = d3.map();
+units = d3.map(); // This contians the correct spellings of units
+rough_units = d3.map(); // This contains approximate spellings of units
 unit_list = undefined;
-unit_regular_expression = /\s*(\d+(\.\d+)?([eE]-?\d+)?)\s*(\S*)/;
+unit_regular_expression = /\s*(\d+(\.\d+)?([eE]-?\d+)?)\s*(.*)/;
 alias_split_regular_expression = /\s*,\s*/;
 small_comparison_number_format = d3.format(".0%");
 large_comparison_number_format = d3.format(".1f");
@@ -28,6 +29,9 @@ d3.tsv("units.tsv", function(data) {
     if(d.name.length > 0) {
       units.set(d.name.toLowerCase(), d);
     }
+
+    rough_units.set(roughMatch(d.symbol), d);
+    rough_units.set(roughMatch(d.name), d);
     
     aliases = d.aliases.split(alias_split_regular_expression);
     
@@ -35,6 +39,7 @@ d3.tsv("units.tsv", function(data) {
       a = a.toLowerCase().trim();
       if(a.length > 0) {
         units.set(a, d);
+        rough_units.set(roughMatch(a), d);
       };
     });
   });
@@ -128,6 +133,17 @@ function format(number, unit, number_of_significant_figures) {
   return d3.format(",."+number_of_significant_figures+"r")(number).replace(/,/gi,'&thinsp;')+"&thinsp;"+unit;
 }
 
+
+// This tries to come up wiht an approximate match for a unit, so that
+// additional spaces, repeated letters, hypthens and pluralised words don't matter.
+// e.g., KILO-watts per   hours becomes kilowatperhour
+function roughMatch(string) {
+  lower_and_trimmed = string.toLowerCase().trim()
+  no_repeats = lower_and_trimmed.replace(/(.)(?=\1+)/gi, "\1");
+  no_junk = no_repeats.replace(/(s\b)|\W/gi, "");
+  return no_junk;
+}
+
 inputForm = d3.select('input#input');
 inputForm.on('input', userInput);
 
@@ -163,6 +179,9 @@ function userInput() {
   if(input_unit.length == 0) { return clear(); }
 
   input_unit_object = units.get(input_unit);
+  if(input_unit_object == undefined) {
+    input_unit_object = rough_units.get(roughMatch(input_unit));
+  }
 
   // This waits for 5 seconds in case the user is typing
   // if, after 5 seconds, the unit isn't recognised, shows
