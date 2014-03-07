@@ -3,6 +3,17 @@ how-much-is
 
 I wrote this tool to help me understand numbers in different units. The purpose of the tool is to be practical. Therefore it is content to deal in units and conversions that are ambiguous (e.g., $100/barrel) or not strictly correct (e.g., ppm which could be &micro;kg/kg or &micro;m3/m3).
 
+Canonical source: http://github.com/tamc/how-much-is
+
+License: &copy; 2014 tom@counsell.org - [Open source MIT licence](./LICENSE).
+
+Warnings:
+
+* Take care: I take no responsiblity for the consequences of errors in this software.
+* Take care: This tool reflects my preference, and so the conversion outputs have the same significant figures as the inputs. Therefore don't naively use this as a source of conversion factors. Look in [Units.tsv](./Units.tsv) for that, or better yet, go to an authoritative source.
+* Take care: This tool uses the number precision of the underlying javascript environment. So, errors can creep in. If you feel like converting the code to use a bigdecimal arithmetic library, that would be brilliant.
+
+
 Adding or editing units
 =======================
 
