@@ -35,5 +35,5 @@ watt-hours per year	Wh/y		0.0001140771161 W	A <b>watt-hour per year</b> is a mea
 kilowatt-hours per year	kWh/y		0.1140771161 W	A <b>kilowatt-hour per year</b> is a measure of power. It is rarely used. But it gives a sense of the energy output from running a particular amount of power for a year.	
 megawatt-hours per year	MWh/y		0.1140771161e3 W	A <b>megawatt-hour per year</b> is a measure of power. It is rarely used. But it gives a sense of the energy output from running a particular amount of power for a year.	
 gigawatt-hours per year	GWh/y		0.1140771161e6 W	A <b>gigawatt-hour per year</b> is a measure of power. It is rarely used. But it gives a sense of the energy output from running a particular amount of power for a year.	
-terawatt-hours per year	TWh/y		0.1140771161e9 W	A <b>terawatt-hour per year</b> is a measure of power. It is rarely used. But it gives a sense of the energy output from running a particular amount of power for a year.	
-Calorie	Cal	4187 K A "food calorie" is approximately the energy required to raise the temperature of 1 kg of water by 1 degree Celsius.
+terawatt-hours per year	TWh/y		0.1140771161e9 W	A <b>terawatt-hour per year</b> is a measure of power. It is rarely used. But it gives a sense of the energy output from running a particular amount of power for a year.
+Calorie	Cal		4187 J	A <b>food calorie</b> is approximately the energy required to raise the temperature of 1 kg of water by 1 degree Celsius.
