@@ -21,6 +21,19 @@ d3.tsv("units.tsv", function(data) {
     // Clean up other attributes
     d.name = d.name.trim();
     d.symbol = d.symbol.trim();
+
+    if(d.symbol == "") {
+      d.symbol = d.name;
+    }
+
+    // Clean up variants
+    if(d.exclude_from_results == undefined) { d.exclude_from_results = ""; }
+    d.exclude_from_results = d.exclude_from_results.trim().toLowerCase();
+    if(d.exclude_from_results == "yes" || d.exclude_from_results == "y" || d.exclude_from_results == 'true') {
+      d.exclude_from_results = true;
+    } else {
+      d.exclude_from_results = false;
+    }
     
     // File it in this type according to its symbol, name and aliases
     if(d.symbol.length > 0) {
@@ -227,10 +240,12 @@ function userInput() {
 
     // Check output unit has same fundamental unit
     if(output_unit.fundamental_unit == input_fundamental_unit) { 
-      output_unit.output_quantity = input_fundamental_quantity / output_unit.fundamental_quantity;
-      output_unit.output_quantity_string = format(output_unit.output_quantity, output_unit.symbol, input_significant_figures);
-      // We might want to see this one
-      units_to_display.push(output_unit);
+      if(!output_unit.exclude_from_results) {
+        output_unit.output_quantity = input_fundamental_quantity / output_unit.fundamental_quantity;
+        output_unit.output_quantity_string = format(output_unit.output_quantity, output_unit.symbol, input_significant_figures);
+        // We might want to see this one
+        units_to_display.push(output_unit);
+      }
     } else {
       output_unit.output_quantity = undefined;
     }

@@ -29,6 +29,8 @@ Each row has:
 * equivalent_to - the unit in another unit (e.g., for a minute, we put 60s). A few more details on this are below.
 * description - start with the singular name in bold, then what it is, then who uses it and for what.
 * source - a reputable source for the conversion. The [NIST](http://physics.nist.gov/Pubs/SP811/appenB9.html) is a good source. Wikipedia less so.
+* exclude_from_results - if this contains YES then this unit can be used as an input, but won't appear as an output conversion. This is appropriate for things that people commonly use as units (e.g., homes) but aren't reccomended, so we don't want to show them when people input different units.
+
 
 The equivalent_to column can contain a number and unit written in any other unit. If that unit appears elsewhere in the table, then it is assumed tha a number in this unit can be converted into that other unit _and_ any unit that the other unit can be converted into. So, for example, if we have:
 
