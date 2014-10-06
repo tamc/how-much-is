@@ -17,7 +17,7 @@ Warnings:
 Adding or editing units
 =======================
 
-Edit [units.tsv](units.tsv) to add a new unit. It is easiest to edit this file in a spreadsheet program. Once edited, either email the new copy to me at tom@counsell.org or, if you know how, use github to [fork and pull](https://help.github.com/articles/using-pull-requests).
+Edit [units.tsv](./units.tsv) to add a new unit. It is easiest to edit this file in a spreadsheet program. Once edited, either email the new copy to me at tom@counsell.org or, if you know how, use github to [fork and pull](https://help.github.com/articles/using-pull-requests).
 
 The file has one row per unit. By unit we mean suffix that might be added to a number. So kilograms and grams get separate rows.
 
@@ -32,7 +32,7 @@ Each row has:
 * exclude_from_results - if this contains YES then this unit can be used as an input, but won't appear as an output conversion. This is appropriate for things that people commonly use as units (e.g., homes) but aren't reccomended, so we don't want to show them when people input different units.
 
 
-The equivalent_to column can contain a number and unit written in any other unit. If that unit appears elsewhere in the table, then it is assumed tha a number in this unit can be converted into that other unit _and_ any unit that the other unit can be converted into. So, for example, if we have:
+The equivalent_to column can contain a number and unit written in any other unit. If that unit appears elsewhere in the table, then it is assumed that a number in this unit can be converted into that other unit _and_ any unit that the other unit can be converted into. So, for example, if we have:
 
 <table>
   <tr><td>name</td><td>equivalent_to</td></tr>
@@ -44,7 +44,7 @@ The equivalent_to column can contain a number and unit written in any other unit
   <tr><td>kilometer</td><td>1000 meters</td></tr>
 </table>
 
-Then a kilogram can be converted to a gram. A pound can also be converted to a gram, because pound has been given a unit in kilograms, and kilograms has been given a unit in grams. However, the system can't convert a blog into a kilogram, despite the blog being a recognised unit of mass. This is because it can convert a blog into a slug, but there is no definition of slug and, in particular, there is no definition of slug that refers to either a gram or a kilogram or a pound. This is the same reason the system won't convert a kilometer into a gram.
+Then a kilogram can be converted to a gram. A pound can also be converted to a gram, because pound has been given a unit in kilograms, and kilograms has been given a unit in grams. However, the system can't convert a blob into a kilogram, despite the blob being a recognised unit of mass. This is because it can convert a blob into a slug, but there is no definition of slug and, in particular, there is no definition of slug that refers to either a gram or a kilogram or a pound. This is the same reason the system won't convert a kilometer into a gram.
 
 
 
