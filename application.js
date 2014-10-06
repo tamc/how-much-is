@@ -147,7 +147,7 @@ function format(number, unit, number_of_significant_figures) {
 }
 
 
-// This tries to come up wiht an approximate match for a unit, so that
+// This tries to come up with an approximate match for a unit, so that
 // additional spaces, repeated letters, hypthens and pluralised words don't matter.
 // e.g., KILO-watts per   hours becomes kilowatperhour
 function roughMatch(string) {
