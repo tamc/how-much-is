@@ -5,7 +5,7 @@ I wrote this tool to help me understand numbers in different units. The purpose 
 
 Canonical source: http://github.com/tamc/how-much-is
 
-License: &copy; 2014 tom@counsell.org - [Open source MIT licence](./LICENSE).
+License: &copy; 2014-18 tom@counsell.org - [Open source MIT licence](./LICENSE).
 
 Warnings:
 
