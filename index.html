@@ -1,171 +1,65 @@
 <!doctype html>
 <html lang=en>
-<meta charset=utf-8>
 
 <head>
-  <title>How much is?</title>
-  <script src='d3.min.js'></script>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-    }
-
-    div {
-      box-sizing: border-box;
-    }
-
-    h2 {
-      font-size: 1em;
-      margin-bottom: 0em;
-    }
-
-    p {
-      margin: 0.1em;
-    }
-
-    em {
-      font-weight: normal;
-      background-color: yellow;
-    }
-
-    /* Thanks to http://davidwalsh.name/css-slide */
-    div.slider {
-      overflow-y: hidden;
-      max-height: 1000px;
-      /* approximate max height */
-
-      transition-property: max-height, padding-top, padding-bottom;
-      transition-duration: 0.5s;
-      transition-timing-function: cubic-bezier(0, 1, 0.5, 1);
-    }
-
-    div.slider.closed {
-      max-height: 0px;
-      padding-top: 0px !important;
-      padding-bottom: 0px !important;
-    }
-
-    div.round {
-      padding: 10px;
-      border: solid black 1px;
-      border-radius: 5px;
-      margin-top: 10px;
-    }
-
-    #wrapper {
-      margin: 10px auto;
-      width: 100%;
-      max-width: 35em;
-    }
-
-    #question {
-      font-size: 2em;
-    }
-
-    input#input {
-      font-size: 1em;
-      width: 250px;
-      color: red;
-    }
-
-    .barwrapper {
-      margin: 0;
-      padding: 0;
-      border: 0;
-    }
-
-    .outerbar {
-      height: 10px;
-      border: solid black 1px;
-      margin-right: 1%;
-      display: inline-block;
-    }
-
-    .innerbar {
-      height: 8px;
-      background-color: red;
-    }
-
-    .comparison .description,
-    .preciseValue {
-      font-size: smaller;
-      color: grey;
-    }
-
-    .comparison a {
-      color: grey;
-    }
-
-    #input_description b,
-    .unit b {
-      font-weight: normal;
-    }
-
-    #apology {
-      background-color: yellow;
-    }
-  </style>
+    <meta charset=utf-8>
+    <title>How much is?</title>
+    <script src='d3.min.js'></script>
+    <link rel="stylesheet" href="application.css">
 </head>
 
 <body>
-  <div id='wrapper'>
-    <div id='question' class='round'>
-      How much is <input autofocus id='input' placeholder='type here'>?
-    </div>
-    <div id='apology' class='round slider closed'>
-      Sorry. I don't know that unit. Please <a href='mailto:tom@counsell.org'>drop me an email</a> with the unit and
-      some context as to where it appears.
-    </div>
-    <div id='examples' class='round slider'>
-      I wrote this tool to help me understand numbers in different units.
-      Try:
-      <ul>
-        <li>
-          Energy:
-          <a class='example' href='#'>100 TWh</a>,
-          <a class='example' href='#'>123 ktoe</a>,
-          <a class='example' href='#'>1000 therms</a> or
-          <a class='example' href='#'>1 boe</a>
-        </li>
-        <li>
-          Power:
-          <a class='example' href='#'>100 MW</a>,
-          <a class='example' href='#'>10 mscm/d</a>
-        </li>
-        <li>
-          Area:
-          <a class='example' href='#'>100 ares</a>
-          <a class='example' href='#'>10.3 hectares</a> or
-          <a class='example' href='#'>19 m2</a>
-        </li>
-        <li>
-          Emissions:
-          <a class='example' href='#'>1 pgC</a> or
-          <a class='example' href='#'>700 MtCO2e</a>
-        </li>
-      </ul>
-      You can also see <a href='https://github.com/tamc/how-much-is/blob/gh-pages/units.tsv'>a list of all the units
+    <div id='wrapper'>
+        <div id='question' class='round'>
+            How much is <input autofocus id='input' placeholder='type here'>?
+        </div>
+        <div id='apology' class='round slider closed'>
+            Sorry. I don't know that unit. Please <a href='mailto:tom@counsell.org'>drop me an email</a> with the unit and some context as to where it appears.
+        </div>
+        <div id='examples' class='round slider'>
+            I wrote this tool to help me understand numbers in different units. Try:
+            <ul>
+                <li>
+                    Energy:
+                    <a class='example' href='#'>100 TWh</a>,
+                    <a class='example' href='#'>123 ktoe</a>,
+                    <a class='example' href='#'>1000 therms</a> or
+                    <a class='example' href='#'>1 boe</a>
+                </li>
+                <li>
+                    Power:
+                    <a class='example' href='#'>100 MW</a>,
+                    <a class='example' href='#'>10 mscm/d</a>
+                </li>
+                <li>
+                    Area:
+                    <a class='example' href='#'>100 ares</a>
+                    <a class='example' href='#'>10.3 hectares</a> or
+                    <a class='example' href='#'>19 m2</a>
+                </li>
+                <li>
+                    Emissions:
+                    <a class='example' href='#'>1 pgC</a> or
+                    <a class='example' href='#'>700 MtCO2e</a>
+                </li>
+            </ul>
+            You can also see <a href='https://github.com/tamc/how-much-is/blob/gh-pages/units.tsv'>a list of all the units
         that this tool knows</a>.
-    </div>
-    <div id='input_description' class='round slider closed'>
-      <h2 class='name'></h2>
-      <p><span class='name'></span><span class='description'></span></p>
-    </div>
-    <div id='comparisons' class='round slider closed'>
-      <h2 class='title'></h2>
-    </div>
-    <div id='output' class='round slider closed'>
-      <h2 class='title'></h2>
-    </div>
-    <div id='footnote' class='round'>
-      <p>This tool was produced by <a href='http://tom.counsell.org'>Tom Counsell</a>. It is open source. Make a copy
-        and report problems at <a href='http://github.com/tamc/how-much-is'>github</a>.
-        The underlying data is in <a href='units.tsv' download>units.tsv</a> and <a
-          href='comparisons.tsv'>comparisons.tsv</a> (You can open those files in Excel).
-        I have written <a href='https://github.com/tamc/how-much-is/blob/gh-pages/README.md'>some instructions</a> on
-        how to add or edit units.</p>
-    </div>
+        </div>
+        <div id='input_description' class='round slider closed'>
+            <h2 class='name'></h2>
+            <p><span class='name'></span><span class='description'></span></p>
+        </div>
+        <div id='comparisons' class='round slider closed'>
+            <h2 class='title'></h2>
+        </div>
+        <div id='output' class='round slider closed'>
+            <h2 class='title'></h2>
+        </div>
+        <div id='footnote' class='round'>
+            <p>This tool was produced by <a href='http://tom.counsell.org'>Tom Counsell</a>. It is open source. Make a copy and report problems at <a href='http://github.com/tamc/how-much-is'>github</a>. The underlying data is in <a href='units.tsv' download>units.tsv</a>                and <a href='comparisons.tsv'>comparisons.tsv</a> (You can open those files in Excel). I have written <a href='https://github.com/tamc/how-much-is/blob/gh-pages/README.md'>some instructions</a> on how to add or edit units.</p>
+        </div>
 
 
-    <script src='application.js' type='text/javascript'></script>
+        <script src='application.js' type='text/javascript'></script>
 </body>

@@ -1,0 +1,99 @@
+body {
+    font-family: Arial, sans-serif;
+}
+
+div {
+    box-sizing: border-box;
+}
+
+h2 {
+    font-size: 1em;
+    margin-bottom: 0em;
+}
+
+p {
+    margin: 0.1em;
+}
+
+em {
+    font-weight: normal;
+    background-color: yellow;
+}
+
+
+/* Thanks to http://davidwalsh.name/css-slide */
+
+div.slider {
+    overflow-y: hidden;
+    max-height: 1000px;
+    /* approximate max height */
+    transition-property: max-height, padding-top, padding-bottom;
+    transition-duration: 0.5s;
+    transition-timing-function: cubic-bezier(0, 1, 0.5, 1);
+}
+
+div.slider.closed {
+    max-height: 0px;
+    padding-top: 0px !important;
+    padding-bottom: 0px !important;
+}
+
+div.round {
+    padding: 10px;
+    border: solid black 1px;
+    border-radius: 5px;
+    margin-top: 10px;
+}
+
+#wrapper {
+    margin: 10px auto;
+    width: 100%;
+    max-width: 35em;
+}
+
+#question {
+    font-size: 2em;
+}
+
+input#input {
+    font-size: 1em;
+    width: 250px;
+    color: red;
+}
+
+.barwrapper {
+    margin: 0;
+    padding: 0;
+    border: 0;
+}
+
+.outerbar {
+    height: 10px;
+    border: solid black 1px;
+    margin-right: 1%;
+    display: inline-block;
+}
+
+.innerbar {
+    height: 8px;
+    background-color: red;
+}
+
+.comparison .description,
+.preciseValue {
+    font-size: smaller;
+    color: grey;
+}
+
+.comparison a {
+    color: grey;
+}
+
+#input_description b,
+.unit b {
+    font-weight: normal;
+}
+
+#apology {
+    background-color: yellow;
+}
